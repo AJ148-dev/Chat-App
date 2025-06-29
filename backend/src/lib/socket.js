@@ -1,14 +1,14 @@
 import { Server } from "socket.io";
-import http from "http";
 
 const userSocketMap = {};
+let io; 
 
 export function getReceiverSocketId(userId) {
     return userSocketMap[userId];
 }
 
 export function initSocket(server) {
-    const io = new Server(server, {
+    io = new Server(server, {
         cors: {
             origin: ["http://localhost:5173"],
             credentials: true,
@@ -29,3 +29,5 @@ export function initSocket(server) {
 
     return io;
 }
+
+export { io }; 
