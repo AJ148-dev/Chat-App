@@ -23,10 +23,6 @@ export const useChatStore = create((set,get)=>({
         }
     },
     getMessages: async(userId)=>{
-        if (!userId) {
-            toast.error("No user selected to fetch messages.");
-            return;
-        }
         set({isMessagesLoading:true});
         try {
             const response = await axiosInstance.get(`/messages/${userId}`);  
@@ -40,10 +36,6 @@ export const useChatStore = create((set,get)=>({
     },
     sendMessage: async(messageData) =>{
         const {selectedUser, messages} = get();
-        if (!selectedUser) {
-            toast.error("No user selected.");
-            return;
-        }
         try {
             const response = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData);
             set({messages: [...messages, response.data]});

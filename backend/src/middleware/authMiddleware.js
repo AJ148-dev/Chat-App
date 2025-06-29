@@ -6,7 +6,7 @@ export const protectRoute = async(req, res, next)=>{
         // find token , then validate(gives userId), then req.user = user (from json token);
         const token = req.cookies.jwt;
         if(!token){
-            return res.status(400).json({
+            return res.status(401).json({
                 message: "Unauthorized - No token provided"
             })
         }
@@ -14,7 +14,7 @@ export const protectRoute = async(req, res, next)=>{
         const decoded = jwt.verify(token, process.env.JWT_SECRET); // return {userId, ...}
 
         if(!decoded){
-            return res.status(400).json({
+            return res.status(401).json({
                 message: "Unauthorized - Invalid Token"
             })
         }
